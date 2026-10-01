@@ -1,0 +1,47 @@
+# Bytecode and runtime cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Environment and secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.cert
+*.pfx
+
+# Packaged browser extensions & certificates
+*.crx
+extension/_metadata/
+flowkit_repo/extension/_metadata/
+scenes.json
+
+# Databases & local sqlite
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Output generated media & project artifacts
+out/
+output/
+youtube/
+agent/active_project.json
+flowkit_repo/agent/active_project.json
+
+# OS artifacts
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# IDE & Editor settings
+.vscode/
+.idea/
+
+# Setup configs
+.claude/commands/fk:*
+.gemini/commands/
+.fk-setup.json
