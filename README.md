@@ -1,232 +1,243 @@
-# 🎬 Video Atlas — AI YouTube Automation & Production Pipeline
+# 🎬 Video Atlas — Autonomous Multi-Channel AI Video Production Pipeline
+
+[English](README.md) | [Tiếng Việt](README.vi.md)
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Automation](https://img.shields.io/badge/Platform-Google%20Flow%20%7C%20AtlasCloud%20%7C%20FFmpeg-success)](#)
-[![YouTube](https://img.shields.io/badge/Output-Shorts%20(9:16)%20%7C%20Long--form%20(16:9)-red)](#)
+[![Platform](https://img.shields.io/badge/Engines-Google%20Flow%20%7C%20AtlasCloud%20%7C%20FFmpeg-success)](#)
+[![Output Formats](https://img.shields.io/badge/Formats-YouTube%20Shorts%20(9:16)%20%7C%20Long--form%20(16:9)-red)](#)
 
-> **Video Atlas** là hệ thống pipeline tự động hóa sản xuất video YouTube chất lượng cao đa kênh (Multi-Channel Faceless YouTube Network) nhắm tới thị trường Mỹ (US) và toàn cầu. Hệ thống tích hợp AI Agent, Google Flow (FlowKit Bridge), xAI TTS, và FFmpeg để biến một chủ đề thô thành video hoàn chỉnh từ kịch bản, hình ảnh, chuyển động, giọng đọc, phụ đề kinetic cho đến siêu dữ liệu YouTube SEO.
-
----
-
-## 📑 Mục lục
-- [🌟 Điểm nổi bật](#-điểm-nổi-bật)
-- [🏛️ Kiến trúc 4 Kênh Thương hiệu (Brand Identities)](#️-kiến-trúc-4-kênh-thương-hiệu-brand-identities)
-- [⚙️ Quy trình sản xuất 6 bước (Pipeline Workflow)](#️-quy-trình-sản-xuất-6-bước-pipeline-workflow)
-- [📂 Cấu trúc dự án (Directory Structure)](#-cấu-trúc-dự-án-directory-structure)
-- [🚀 Hướng dẫn cài đặt & Thiết lập (Setup Guide)](#-hướng-dẫn-cài-đặt--thiết-lập-setup-guide)
-- [🛠️ Hướng dẫn vận hành Pipeline (Quickstart)](#️-hướng-dẫn-vận-hành-pipeline-quickstart)
-- [🛡️ Luật sản xuất & Kiểm soát chất lượng (Golden Rules)](#️-luật-sản-xuất--kiểm-soát-chất-lượng-golden-rules)
-- [📊 YouTube SEO & Phân phối (Distribution Strategy)](#-youtube-seo--phân-phối-distribution-strategy)
+> **Video Atlas** is a production-grade, autonomous pipeline designed to generate broadcast-quality videos for faceless YouTube channels targeting US and global audiences. By orchestrating specialized AI Agents, Google Flow (via the FlowKit browser bridge), xAI TTS, and local FFmpeg rendering, Video Atlas transforms a single raw topic into fully produced videos—complete with human-quality narration, visual pacing, dynamic kinetic captions, sound design, and full YouTube SEO metadata.
 
 ---
 
-## 🌟 Điểm nổi bật
-
-- **Kiểm soát chất lượng bằng 2 cổng kiểm duyệt (2 Approval Gates):**
-  - **Gate 1:** Kiểm duyệt kịch bản `beats.json` (Narration tiếng Anh Mỹ tự nhiên, word budget 130-145 từ, không AI-slop).
-  - **Gate 2:** Kiểm duyệt bộ Keyframes, kiểm tra First Frame Headline & xóa watermark trước khi sinh clip.
-- **Tối ưu hóa First Frame (Frame 0 Shorts CTR):** Công thức 3 lớp loại bỏ 100% màn hình đen, chèn Headline giật gân trực tiếp vào prompt để frame 0 trở thành thumbnail tự nhiên trên Shorts Feed.
-- **Âm thanh chuẩn YouTube (-14 LUFS):** Tự động điều chỉnh kỹ thuật Audio Ducking (nhạc nền giảm -18dB đến -22dB khi có thoại), xuất âm lượng chuẩn hóa không bị thuật toán ép giảm volume.
-- **Đa dạng phong cách hình ảnh (Multi-Style Visual Engines):** Cắt dán giấy báo chí (Vox Collage), Pixel Art 16-bit kèm CRT Scanline, Truyện tranh Mỹ cổ điển thập niên 80 (Retro Pulp Comic), và Bản vẽ kỹ thuật 3D X-Ray (Blueprint Noir).
-- **Google Flow Engine Bridge (FlowKit):** Kết nối trực tiếp trình duyệt Chrome Extension với Python Local Agent qua WebSocket, tối ưu chi phí sinh video với chất lượng điện ảnh.
+## 📑 Table of Contents
+- [🌟 Key Highlights](#-key-highlights)
+- [🏛️ Multi-Channel Brand Architecture](#️-multi-channel-brand-architecture)
+- [⚙️ End-to-End Pipeline Workflow](#️-end-to-end-pipeline-workflow)
+- [📂 Repository Architecture](#-repository-architecture)
+- [🚀 Prerequisites & Installation](#-prerequisites--installation)
+- [🛠️ Quickstart CLI Walkthrough](#️-quickstart-cli-walkthrough)
+- [🛡️ Production Guardrails & Quality Standards](#️-production-guardrails--quality-standards)
+- [📊 Distribution & Growth Funnel](#-distribution--growth-funnel)
+- [🤝 Contributing & License](#-contributing--license)
 
 ---
 
-## 🏛️ Kiến trúc 4 Kênh Thương hiệu (Brand Identities)
+## 🌟 Key Highlights
 
-Mỗi kênh trong hệ thống sở hữu visual DNA, series đặc trưng và chữ ký Outro cố định:
+- **Two-Tier Human-in-the-Loop Quality Control:**
+  - **Gate 1 (Script & Narration Approval):** Validates narrative pacing, 130–145 word budget for Shorts, human tone, and factual grounding before image synthesis.
+  - **Gate 2 (Keyframes & Google Flow URL Binding):** Verifies visual assets, audits First-Frame headline legibility, confirms watermark removal, and links the active Google Flow project session.
+- **First-Frame (Frame 0) Shorts CTR Engine:** Employs a 3-layer thumbnail formula that embeds high-contrast bold headlines directly into the AI image prompt and triggers kinetic captions at `t=0.00s`—eliminating cold opens and black screens.
+- **Broadcast Audio Mastering (-14 LUFS):** Enforces professional audio ducking (reducing background music by -18dB to -22dB during speech) and balances master audio to YouTube’s Integrated Loudness standard (-14 LUFS) to prevent algorithmic volume suppression.
+- **Multi-DNA Visual Engines:** Supports four distinct aesthetic directors:
+  - *Vox-style Newsprint Collage* (raw torn-paper textures, Scotch tape, archival clippings).
+  - *16-Bit Retro Pixel Art* (custom CRT scanlines and phosphor glow post-processing).
+  - *1980s Vintage Pulp Comic* (bold ink contours, CMYK halftone dots, pop-art palettes).
+  - *Blueprint Noir 3D X-Ray* (isometric CAD wireframes, dark slate `#0B192C`, and glowing electric cyan lines).
+- **Google Flow Engine Bridge (FlowKit):** Direct local WebSocket/HTTP bridge connecting Chrome extension to the local Python engine, enabling zero-cost, cinematic video rendering.
 
-| Kênh | Phong cách hình ảnh | Series chủ đạo | Ngách nội dung | Giọng đọc & Outro Signature |
+---
+
+## 🏛️ Multi-Channel Brand Architecture
+
+Each channel within the network operates with a dedicated visual DNA, flagship series format, sound persona, and invariant signature outro:
+
+| Channel | Visual Aesthetic | Flagship Series | Core Niche | Voice Model & Outro Signature |
 | :--- | :--- | :--- | :--- | :--- |
-| **Papercut Business** | Vox Papercut Collage (Báo cũ, viền xé, băng dính Scotch) | *Everyday Monopolies* | Bí mật kinh tế ngầm, đế chế độc quyền quanh ta | Giọng `leo` (xAI TTS trầm ấm tài liệu).<br>_CTA: "This is just the surface of corporate secrets. Subscribe to Papercut Business for the full deep dive into everyday monopolies."_ |
-| **Pixel Rewind** | 16-bit Pixel Art + CRT Scanlines & Phosphor Glow | *Boot Sequence* | Nguồn gốc công nghệ & lịch sử video game kinh điển | Giọng `leo` / `kai` (Hoài niệm công nghệ).<br>_CTA: "That's just one level of tech history. Subscribe to Pixel Rewind for the full playthrough."_ |
-| **Pulp Hypotheses** | Retro 1980s Pulp Comic (Nét mực dày, vệt chấm CMYK Halftone) | *Absurd Timelines* | Thí nghiệm tư duy giả định phi lý ("What If" Lịch sử & Khoa học) | Giọng `leo` (Kịch tính, retro comic).<br>_CTA: "That's just one absurd timeline. Subscribe to Pulp Hypotheses for more mind-bending What-If files!"_ |
-| **Blackprint** | 3D Isometric Cutaway X-Ray (Blueprint Noir `#0B192C`, Cyan `#00F0FF`) | *Deconstructed* | Giải phẫu siêu công trình, kỳ quan cổ đại & vũ khí kỹ thuật | Giọng `leo` (Trầm lạnh, uy quyền kỹ thuật).<br>_CTA: "Every machine has a secret. Subscribe to Blackprint to unlock the next 3D file."_ |
+| **Papercut Business** | Vox Papercut Collage (Newsprint, torn paper, scotch tape) | *Everyday Monopolies* | Hidden corporate economics, business mini-docs, everyday monopolies | Voice `leo` (Warm documentary narrator).<br>_CTA: "This is just the surface of corporate secrets. Subscribe to Papercut Business for the full deep dive into everyday monopolies."_ |
+| **Pixel Rewind** | 16-bit Pixel Art with CRT Scanlines & Phosphor Glow | *Boot Sequence* | Origin stories of iconic tech, retro consoles, and video game history | Voice `leo` / `kai` (Nostalgic tech explorer).<br>_CTA: "That's just one level of tech history. Subscribe to Pixel Rewind for the full playthrough."_ |
+| **Pulp Hypotheses** | 1980s Pulp Comic (Heavy ink lines, CMYK halftone dots) | *Absurd Timelines* | Absurd & mind-bending "What If" thought experiments in history & science | Voice `leo` (Dramatic retro comic narrator).<br>_CTA: "That's just one absurd timeline. Subscribe to Pulp Hypotheses for more mind-bending What-If files!"_ |
+| **Blackprint** | 3D Isometric Cutaway X-Ray (CAD wireframe, Blueprint Noir) | *Deconstructed* | Engineering breakdowns of megastructures, weapons, and ancient wonders | Voice `leo` (Authoritative technical breakdown).<br>_CTA: "Every machine has a secret. Subscribe to Blackprint to unlock the next 3D file."_ |
 
 ---
 
-## ⚙️ Quy trình sản xuất 6 bước (Pipeline Workflow)
+## ⚙️ End-to-End Pipeline Workflow
 
 ```mermaid
 flowchart TD
-    A["💡 Bước 0: Topic Discovery & Reddit Research<br/>(Reddit MCP + Google Trend Scout)"] --> B["📝 Bước 1: Kịch bản Beats.json & Human Polish<br/>(Word Budget 130-145 từ)"]
-    B --> G1{"🚪 Gate 1: Duyệt Kịch bản<br/>(User Approval)"}
-    G1 -- Approved --> C["🎨 Bước 2: Sinh Keyframes & First Frame<br/>(Google Flow / FlowKit)"]
-    G1 -- Revision --> B
-    C --> G2{"🚪 Gate 2: Duyệt Keyframes<br/>(Check Headline & URL Flow Project)"}
-    G2 -- Approved --> D["🎙️ Bước 3: Thu âm TTS & Audio Ducking<br/>(xAI TTS + BGM Normalization -14 LUFS)"]
-    D --> E["🎥 Bước 4: Tạo Motion Video Clips<br/>(FlowKit Batch Generation 8.0s Clips)"]
-    E --> F["🎞️ Bước 5: Ghép Video Final<br/>(FFmpeg + Kinetic Captions + CRT Post)"]
-    F --> G["🚀 Bước 6: Xuất Metadata & YouTube SEO<br/>(3 Titles + Description + Tags + Pinned Comment)"]
+    A["💡 Step 0: Topic Discovery & Reddit Research<br/>(Reddit MCP + Trend Scout)"] --> B["📝 Step 1: Beats Scripting & Human Polish<br/>(Strict Word Budget: 130-145 words)"]
+    B --> G1{"🚪 Gate 1: Script Approval<br/>(User Markdown Review)"}
+    G1 -- Approved --> C["🎨 Step 2: Keyframe & Frame 0 Generation<br/>(Google Flow / FlowKit)"]
+    G1 -- Revisions --> B
+    C --> G2{"🚪 Gate 2: Keyframe Approval<br/>(Inspect Frame 0 & Bind Flow Project URL)"}
+    G2 -- Approved --> D["🎙️ Step 3: TTS Voice-Over & Audio Ducking<br/>(xAI TTS + BGM Normalization -14 LUFS)"]
+    D --> E["🎥 Step 4: Motion Video Clip Generation<br/>(FlowKit Batch Generation 8.0s Clips)"]
+    E --> F["🎞️ Step 5: Video Assembly & Post-Processing<br/>(FFmpeg + Kinetic Captions + CRT Shaders)"]
+    F --> G["🚀 Step 6: Metadata & YouTube SEO Generation<br/>(3 CTR Titles + Description + Tags + Pinned Comment)"]
 ```
 
-### Chi tiết các bước:
-1. **Bước 0 — Khảo sát & Đào ý tưởng:** Quét insight thực tế từ Reddit (Reddit Research MCP) và xu hướng tìm kiếm Mỹ, tìm các góc nhìn trái trực giác hoặc bí mật chưa từng tiết lộ.
-2. **Bước 1 — Biên kịch chuẩn nhịp (`beats.json`):** Viết thoại 100% tiếng Anh Mỹ tự nhiên theo cấu trúc 7-8 shots (53-58 giây cho Shorts). Kiểm soát nhịp 6.5 - 7.5s/shot để khớp hoàn hảo với clip 8.0s của Google Flow.
-3. **Bước 2 — Sinh Keyframes (`keyframes.py`):** Tạo hình ảnh độ nét cao theo visual DNA của từng kênh. Shot 1a được chèn Headline trực tiếp vào prompt để làm First Frame Shorts Thumbnail.
-4. **Bước 3 — Âm thanh (`audio.py`):** Tạo giọng đọc bằng xAI TTS (`leo`), ghép nhạc nền BGM phù hợp phong cách, ducking âm lượng -20dB dưới giọng đọc và cân bằng chuẩn -14 LUFS.
-5. **Bước 4 — Sinh Motion Clips (`clips.py`):** Gửi yêu cầu tới Google Flow qua FlowKit với chỉ thị camera chuẩn (Static cho Comic, Pan mượt cho Papercut, CRT Scanline cho Pixel).
-6. **Bước 5 — Hậu kỳ & Render (`assemble.py`):** Ghép nối video, render phụ đề kinetic nổi bật, gắn logo watermark kênh, áp bộ lọc CRT (cho Pixel Rewind), xuất file `final.mp4`.
-7. **Bước 6 — Tối ưu SEO (`metadata.py`):** Tạo trọn bộ 3 biến thể tiêu đề giật CTR cao, mô tả chuẩn SEO có gắn timestamp/credits, bộ tag 400-480 ký tự, hashtag và bình luận ghim kêu gọi tương tác.
+### Pipeline Breakdown:
+1. **Step 0 — Discovery & Community Mining:** Surfaces authentic hooks and contrarian perspectives using the Reddit Research MCP and US search trends.
+2. **Step 1 — Scripting & Pacing (`beats.json`):** Writes natural American English voice-over across 7–8 shots (53–58s total). Allocates 6.5–7.5s per shot (~15–18 words) to match Google Flow's fixed 8.0-second video clips without freezes or unnatural loops.
+3. **Step 2 — Keyframe Synthesis (`keyframes.py`):** Generates high-resolution keyframes tailored to the channel's visual DNA. Shot 1a embeds the all-caps hook headline directly into the image prompt for Shorts CTR.
+4. **Step 3 — Audio Mastering (`audio.py`):** Synthesizes multilingual speech with xAI TTS (`leo`), layers genre-appropriate background music, ducks BGM by -20dB during voiceover, and normalizes master output to -14 LUFS.
+5. **Step 4 — Motion Video Rendering (`clips.py`):** Dispatches batched camera and movement directives to Google Flow (e.g., static camera for pulp comics, smooth cinematic pans for paper collages, retro zooms for pixel art).
+6. **Step 5 — Assembly & Post-Processing (`assemble.py`):** Merges video streams, stamps dynamic kinetic subtitle cards, applies channel watermarks, layers CRT scanlines (for Pixel Rewind), and exports the master `final.mp4`.
+7. **Step 6 — SEO & Distribution Package (`metadata.py`):** Generates three high-CTR title variations, keyword-dense descriptions with timestamps and AI disclosure, optimized tag blocks (400–480 characters), and an engagement-driving pinned comment.
 
 ---
 
-## 📂 Cấu trúc dự án (Directory Structure)
+## 📂 Repository Architecture
 
 ```text
 video-atlas/
-├── .agents/                      # Hệ thống AI Agent Skills & Quy chuẩn
-│   ├── rules/                    # Các quy tắc cốt lõi (Always-on Rules)
-│   │   ├── channel-identities.md # Bảng nhận diện 4 kênh, CTA, avatar/banner
-│   │   ├── video-production.md   # 17 luật sản xuất, kiểm soát nhịp & an toàn
-│   │   └── youtube-ai-production.md # Chiến lược YouTube Shorts & Long-form
-│   └── skills/                   # Các chuyên gia kỹ năng độc lập
-│       ├── channel_factory/      # Nhà máy tạo kênh & style mới
-│       ├── human_scriptwriter/   # Kỹ năng viết kịch bản chất người, anti-AI
-│       ├── reddit_research/      # Khảo sát insight người thật từ Reddit
-│       ├── youtube_seo_writer/   # Viết metadata & tối ưu SEO YouTube
-│       ├── vox_papercut_director/# Đạo diễn hình ảnh Papercut Business
-│       ├── pixel_retro_director/ # Đạo diễn hình ảnh Pixel Rewind
-│       ├── pulp_comic_director/  # Đạo diễn hình ảnh Pulp Hypotheses
-│       └── blueprint_noir_director/# Đạo diễn hình ảnh Blackprint
-├── assets/                       # Bộ nhận diện kênh (Watermarks, Scanlines, Banners)
-├── flowkit_repo/                 # Cầu nối Google Flow Bridge (Extension & Agent Server)
-│   ├── agent/                    # Python API Server & SQLite DB
-│   └── extension/                # Chrome Extension tự động bắt token & giải captcha
-├── scripts/                      # Bộ công cụ thực thi tự động (Execution Tooling)
-│   ├── draft.py                  # Khởi tạo kịch bản beats.json ban đầu
-│   ├── keyframes.py              # Sinh ảnh keyframes theo nhịp beats
-│   ├── audio.py                  # Sinh giọng đọc xAI TTS & ghép nhạc nền BGM
-│   ├── clips.py                  # Điều phối sinh video clips trên Google Flow
-│   ├── assemble.py               # Render video hoàn chỉnh bằng FFmpeg
-│   ├── text_overlay.py           # Render phụ đề kinetic & chữ nghệ thuật
-│   ├── metadata.py               # Xuất metadata YouTube SEO hoàn chỉnh
-│   ├── thumbnail.py              # Sinh thumbnail riêng cho video Long-form
-│   └── set_active_project.py     # Cấu hình active project ID cho FlowKit
-├── thongtinkenh.md               # Toàn bộ hướng dẫn setup YouTube Studio & nuôi kênh
-└── README.md                     # Tài liệu hướng dẫn toàn diện dự án
+├── .agents/                      # AI Agent Skills, Rules & Style Directors
+│   ├── rules/                    # Enforced system-wide constraints
+│   │   ├── channel-identities.md # 4-channel parameter matrix, CTAs, branding
+│   │   ├── video-production.md   # 17 production laws, timing & safety constraints
+│   │   └── youtube-ai-production.md # Shorts vs Long-form funnel strategies
+│   └── skills/                   # Modular sub-agent competencies
+│       ├── channel_factory/      # Scaffolds new channel identities and directors
+│       ├── human_scriptwriter/   # Anti-AI-slop narrative crafting & sensory polish
+│       ├── reddit_research/      # Real-world community insight extraction
+│       ├── youtube_seo_writer/   # YouTube, TikTok & Reels metadata generator
+│       ├── vox_papercut_director/# Style director for Papercut Business
+│       ├── pixel_retro_director/ # Style director for Pixel Rewind
+│       ├── pulp_comic_director/  # Style director for Pulp Hypotheses
+│       └── blueprint_noir_director/# Style director for Blackprint
+├── assets/                       # Channel branding assets (Watermarks, CRT overlays, Banners)
+├── flowkit_repo/                 # Google Flow Bridge (Extension & Agent Server)
+│   ├── agent/                    # FastAPI Server, SQLite repository, background worker
+│   └── extension/                # Manifest V3 Chrome Extension (token capture & proxy)
+├── scripts/                      # Core automation tooling
+│   ├── draft.py                  # Scaffolds initial beats.json script
+│   ├── keyframes.py              # Generates scene keyframes via FlowKit
+│   ├── audio.py                  # Generates xAI TTS voiceover & mixes BGM
+│   ├── clips.py                  # Dispatches video generation jobs to Google Flow
+│   ├── assemble.py               # Assembles final video using FFmpeg
+│   ├── text_overlay.py           # Renders kinetic captions and title cards
+│   ├── metadata.py               # Generates production-ready YouTube SEO metadata
+│   ├── thumbnail.py              # Generates CTR-optimized long-form thumbnails
+│   └── set_active_project.py     # Binds Google Flow Project IDs to FlowKit
+├── thongtinkenh.md               # YouTube Studio configuration & channel warm-up manual
+├── README.md                     # Default English documentation
+└── README.vi.md                  # Vietnamese documentation
 ```
 
 ---
 
-## 🚀 Hướng dẫn cài đặt & Thiết lập (Setup Guide)
+## 🚀 Prerequisites & Installation
 
-### 1. Yêu cầu hệ thống
-- **Hệ điều hành:** Windows 10/11, macOS, hoặc Linux.
-- **Python:** 3.10 trở lên.
-- **FFmpeg & FFprobe:** Đã cài đặt và có trong PATH hệ thống.
-- **Google Chrome:** Để cài đặt FlowKit Chrome Extension.
+### 1. System Requirements
+- **Operating System:** Windows 10/11, macOS, or Linux.
+- **Python:** 3.10 or 3.11.
+- **FFmpeg & FFprobe:** Installed and available in system `PATH`.
+- **Google Chrome:** Required for the FlowKit Chrome Extension bridge.
 
-### 2. Cài đặt môi trường
-Clone repository và cài đặt các thư viện cần thiết:
+### 2. Environment Setup
+Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/Tung-ht/workflow-automate-video.git
 cd workflow-automate-video
 
-# Tạo virtual environment
+# Create and activate virtual environment
 python -m venv .venv
-# Kích hoạt trên Windows:
+# On Windows:
 .venv\Scripts\activate
-# Hoặc trên Linux/macOS:
+# On macOS / Linux:
 # source .venv/bin/activate
 
-# Cài đặt dependencies
+# Install required packages
 pip install -r flowkit_repo/requirements.txt
 ```
 
-### 3. Cấu hình Biến Môi Trường (Environment Variables)
-Tạo file `.env` (hoặc set trong shell) với các biến sau:
+### 3. Environment Variables
+Configure runtime keys in your shell or `.env` file:
 
 ```bash
-# API Key của Atlas Cloud (cho giọng đọc xAI TTS & BGM)
+# Atlas Cloud API Key (for xAI TTS & BGM generation)
 export ATLASCLOUD_API_KEY="your_atlascloud_api_key_here"
 
-# (Tùy chọn) Nếu dùng Suno hoặc Anthropic Vision
+# (Optional) For Suno music or Claude Vision review
 export SUNO_API_KEY="your_suno_key"
 export ANTHROPIC_API_KEY="your_anthropic_key"
 ```
 
-### 4. Thiết lập Chrome Extension (FlowKit Bridge)
-1. Mở Chrome và truy cập `chrome://extensions/`.
-2. Bật chế độ **Developer mode** (Góc trên bên phải).
-3. Bấm **Load unpacked** và chọn thư mục `flowkit_repo/extension`.
-4. Đăng nhập vào [Google Flow](https://labs.google/fx/tools/flow) trên trình duyệt để Extension tự động đồng bộ session token.
+### 4. Setup FlowKit Chrome Extension
+1. Open Chrome and navigate to `chrome://extensions/`.
+2. Toggle on **Developer mode** (top right).
+3. Click **Load unpacked** and select the `flowkit_repo/extension` directory.
+4. Sign in to [Google Flow](https://labs.google/fx/tools/flow). The extension will automatically sync session credentials with the local agent.
 
 ---
 
-## 🛠️ Hướng dẫn vận hành Pipeline (Quickstart)
+## 🛠️ Quickstart CLI Walkthrough
 
-### Bước 1: Khởi động FlowKit Backend
+### Step 1: Launch FlowKit Backend
 ```bash
 python flowkit_repo/agent/run_server.py
 ```
-*(Kiểm tra sức khỏe: `curl http://127.0.0.1:8100/health` trả về `{"extension_connected": true}`)*.
+*(Verify health: `curl http://127.0.0.1:8100/health` should return `{"extension_connected": true}`)*.
 
-### Bước 2: Tạo dự án & Kịch bản Beats (`beats.json`)
-Sử dụng script tạo khung kịch bản hoặc yêu cầu AI Agent viết kịch bản chuẩn hóa:
+### Step 2: Scaffold Project & Script (`beats.json`)
 ```bash
 python scripts/draft.py out/my_first_short --topic "Why Casio F91W Never Dies" --channel "pixel_rewind"
 ```
-> 🚪 **Approval Gate 1:** Trình bảng Markdown kịch bản cho User review và phê duyệt nội dung.
+> 🚪 **Approval Gate 1:** Review the generated Markdown script table (`Shot ID`, `Duration`, `Narration`, `Visual Description`) and approve before image generation.
 
-### Bước 3: Sinh Keyframes & First Frame Thumbnail
+### Step 3: Generate Keyframes & First-Frame Thumbnail
 ```bash
 python scripts/keyframes.py out/my_first_short
 ```
-> 🚪 **Approval Gate 2:** Kiểm tra ảnh `kf_1a.jpg` (có headline rõ ràng), kiểm tra xóa watermark và cung cấp URL Project Google Flow đang mở trên trình duyệt.
+> 🚪 **Approval Gate 2:** Inspect `kf_1a.jpg` for headline clarity, clean up any unwanted artifacts, and copy the Google Flow project URL currently open in your browser.
 
-Cấu hình Project ID Google Flow:
+Bind the project ID:
 ```bash
-python scripts/set_active_project.py <PROJECT_ID_HOẶC_URL>
+python scripts/set_active_project.py <GOOGLE_FLOW_PROJECT_URL_OR_ID>
 ```
 
-### Bước 4: Tạo giọng đọc & Nhạc nền
+### Step 4: Synthesize Voiceover & Master Audio
 ```bash
 python scripts/audio.py out/my_first_short
 ```
 
-### Bước 5: Sinh Video Clips trên Google Flow
+### Step 5: Render Motion Clips via Google Flow
 ```bash
 python scripts/clips.py out/my_first_short
 ```
-*Clip sẽ xuất hiện trên màn hình Canvas của Google Flow để bạn kiểm tra và tải về thư mục `out/my_first_short/clips/`.*
+*Clips will populate directly in your Google Flow browser canvas. Download the finished clips to `out/my_first_short/clips/`.*
 
-### Bước 6: Render Video Final & Xuất Metadata SEO
+### Step 6: Assemble Video & Generate SEO Metadata
 ```bash
-# Ghép video hoàn chỉnh
+# Assemble video, kinetic captions, watermarks, and audio mix
 python scripts/assemble.py out/my_first_short
 
-# Xuất Metadata YouTube SEO
+# Generate SEO metadata package
 python scripts/metadata.py out/my_first_short
 ```
-Video xuất xưởng sẽ nằm tại: `out/my_first_short/final.mp4`.
+The finished production master will be saved at: `out/my_first_short/final.mp4`.
 
 ---
 
-## 🛡️ Luật sản xuất & Kiểm soát chất lượng (Golden Rules)
+## 🛡️ Production Guardrails & Quality Standards
 
-1. **Thời lượng chuẩn Shorts:** Giới hạn nghiêm ngặt **53 đến 58 giây** (tối đa 60s). Thoại mỗi shot giới hạn **6.5 - 7.5 giây** (~15-18 từ) để không bao giờ bị đơ/freeze hình với clip 8s của Google Flow.
-2. **First Frame Optimization (Frame 0):** Shot 1a bắt buộc chèn Headline in hoa giật gân, kinetic subtitle cất lên ngay `t=0.00s`. **Tuyệt đối cấm mở đầu bằng màn hình đen hoặc fade-in.**
-3. **Outro CTA Bất Biến:** Mọi video bắt buộc có shot Outro CTA tĩnh ở cuối với đúng câu chữ signature của kênh.
-4. **Chuẩn âm lượng YouTube:** Giọng đọc TTS nổi bật, BGM ducking **-18dB đến -22dB**, tổng thể đạt **-14 LUFS Integrated**.
-5. **Prompt An Toàn Google Flow:** Không dùng tên người nổi tiếng hoặc nhãn hiệu bản quyền trong prompt visual (dùng mô tả chung như *"a charismatic tech entrepreneur in a business suit"* thay vì *"Steve Jobs"*).
-
----
-
-## 📊 YouTube SEO & Phân phối (Distribution Strategy)
-
-- **Chiến lược Phễu Chuyển Đổi:**
-  - Sản xuất **Long-form trước (3-5 phút)**, làm **Short sau (45-55s)**.
-  - Đăng Long-form vào buổi sáng (8-10h AM EST). Sau 4-24 giờ đăng Short và gắn **Related Video** trỏ về video Long-form để kéo view bền vững.
-- **Gói Metadata chuẩn hóa:**
-  - **3 Biến thể Tiêu đề:** Câu hỏi tò mò (Mystery/Why), Sự thật ngầm (Hidden Truth), và Bí mật thất bại (Failure/Secret).
-  - **Mô tả 3 tầng:** Hook 2 dòng đầu, tóm tắt nội dung kèm bullet points & timestamp, phần tiết lộ AI Disclosure và Hashtags ngách.
+1. **Shorts Duration Constraints:** Exactly **53 to 58 seconds** (hard ceiling: 60.0s). Each content shot narration must be between **6.5 and 7.5 seconds** (~15–18 words) to seamlessly fit Google Flow's 8.0s clips without freeze frames.
+2. **First-Frame (Frame 0) Rule:** Shot 1a must embed the capitalized hook headline into the image, with kinetic subtitles starting at `t=0.00s`. **Cold opens and fade-ins from black are strictly prohibited.**
+3. **Invariant Outro Signature:** Every video must conclude with an 8.0-second static outro shot containing the exact, unedited channel CTA signature.
+4. **Broadcast Audio Compliance:** Voiceover must remain prominent; BGM is auto-ducked by **-18dB to -22dB**, and master audio is calibrated to **-14 LUFS Integrated**.
+5. **Google Flow Safety Compliance:** Visual prompts must avoid celebrity names and trademarked brands (e.g., use *"a charismatic tech entrepreneur in a business suit"* instead of *"Steve Jobs"*). Narrative text remains 100% uncensored.
 
 ---
 
-## 🤝 Đóng góp & Phát triển
-Mọi đóng góp, báo lỗi hoặc đề xuất tính năng mới đều được hoan nghênh. Vui lòng mở **Issue** hoặc tạo **Pull Request** trên repository.
+## 📊 Distribution & Growth Funnel
 
-*Phát triển bởi đội ngũ Video Atlas — Hệ thống tự động hóa nội dung số thế hệ mới.*
+- **Conversion Funnel Strategy:**
+  - Produce **Long-form videos first (3–5 minutes)**, then produce **Shorts (45–55 seconds)** from the core insight.
+  - Publish Long-form in the morning (8:00–10:00 AM EST). Publish the companion Short 4–24 hours later, linking back to the Long-form video via YouTube’s **Related Video** feature.
+- **Three-Tier CTR Metadata:**
+  - *Curiosity Hook* (Mystery / "Why" angle).
+  - *Hidden Truth* (Economics / Declassified angle).
+  - *Catastrophe / Secret* (Failure / Untold story angle).
+
+---
+
+## 🤝 Contributing & License
+
+Contributions, bug reports, and pull requests are welcome. Please open an issue to discuss proposed architectural changes.
+
+Distributed under the **MIT License**. See `LICENSE` for more information.
+
+*Crafted by the Video Atlas Team — Next-Generation Autonomous Media Production.*
